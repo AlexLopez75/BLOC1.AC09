@@ -3,33 +3,66 @@ public class Program
 {
     public static void Main()
     {
-        const string InputNumber = "Input value {0}:";
-        const string InputError = "Enter a number";
-        const string EvenNumbers = "\nEven numbers: ";
-        const string OddNumbers = "\nOdd numbers: ";
+        const string MenuStart = "What do you want to do?";
+        const string MenuExit = "0 - Exit";
+        const string MenuPokedex = "1 - List Pokémon";
+        const string InputError = "Enter 0 or 1";
+        const string PokemonNumber = ". ";
+        const string PokemonRelease = "Which Pokémon do you want to release? Enter the index: ";
+        const string PokedexImputError = "Enter a value between 1 and 15";
+        const string PokemeonReleased = "The index {0} is empty. There's no Pokémon in that slot to release.";
 
-        int i=0, j=0, number, input = 1;
-        int[] arrayNumsEven = new int[20];
-        int[] arrayNumsOdd = new int[20];
+        int i = 0, j = 1, pokemon, input = 0;
+        string empty = "Empty";
+        string[] arrayPokedex = { "Pikachu", "Charmander", "Squirtle", "Bulbasaur", "Eevee", "Jigglypuff", "Meowth", "Psyduck", "Snorlax", "Gengar", "Machop", "Magikarp", "Vulpix", "Onix", "Abra"};
 
-        for (input = 0; input < 20; input++)
+        do
         {
-            Console.WriteLine(InputNumber, input);
-            try
+            Console.WriteLine(MenuStart);
+            Console.WriteLine(MenuExit);
+            Console.WriteLine(MenuPokedex);
+        
+            try 
             {
-                number = Int32.Parse(Console.ReadLine());
-                if (number % 2 == 0)
+                input = Int32.Parse(Console.ReadLine());
+                switch (input)
                 {
-                    arrayNumsEven[i] = number;
-                    i++;
-                }
-                else
-                {
-                    arrayNumsOdd[i] = number;
-                    j++;
+                    case 1:
+                        j = 1;
+                        for (i = 0; i < arrayPokedex.Length; i++)
+                        {
+                            Console.Write(j + PokemonNumber);
+                            Console.WriteLine($"{arrayPokedex[i]}");
+                            j++;
+                        }
+
+                        Console.WriteLine(PokemonRelease);
+                        try
+                        {
+                            pokemon = Int32.Parse(Console.ReadLine());
+                            if (arrayPokedex[pokemon - 1] == empty)
+                            {
+                                Console.WriteLine(PokemeonReleased, pokemon);
+                            }
+                            else
+                            {
+                                arrayPokedex[pokemon - 1] = empty;
+                            }
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine(PokedexImputError);
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine(PokedexImputError);
+                        }
+                        break;
+                    case 0:
+                        break;
                 }
             }
-            catch (FormatException)
+            catch (FormatException) 
             {
                 Console.WriteLine(InputError);
             }
@@ -37,18 +70,6 @@ public class Program
             {
                 Console.WriteLine(InputError);
             }
-        }
-        i = 0;
-        Console.Write(EvenNumbers);
-        for (i = 0; i < arrayNumsEven.Length; i++)
-        {
-            Console.Write($"{arrayNumsEven[i]} ");
-        }
-        i = 0;
-        Console.Write(OddNumbers);
-        for (i = 0; i < arrayNumsOdd.Length; i++)
-        {
-            Console.Write($"{arrayNumsOdd[i]} ");
-        }
+        } while (input == 1);
     }
 }
