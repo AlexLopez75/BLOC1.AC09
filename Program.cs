@@ -8,7 +8,7 @@ public class Program
         const string EvenNumbers = "\nEven numbers: ";
         const string OddNumbers = "\nOdd numbers: ";
 
-        int i=0, j=0, number, input = 1;
+        int i=0, number, input = 1;
         int[] arrayNumsEven = new int[20];
         int[] arrayNumsOdd = new int[20];
 
