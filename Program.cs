@@ -3,30 +3,43 @@ public class Program
 {
     public static void Main()
     {
+        const string Start = "Enter 10 numbers between 1 and 9";
         const string InputNumber = "Input value {0}:";
-        const string InputError = "Enter a number";
-        const string EvenNumbers = "\nEven numbers: ";
-        const string OddNumbers = "\nOdd numbers: ";
+        const string InputError = "Enter a number between 1 and 9.";
+        const string NormalOrder = "\nNormal order: ";
+        const string InverseOrder = "\nInverse order: ";
+        const int MinNumber = 1;
+        const int MaxNumber = 9;
 
-        int i=0, j=0, number, input = 1;
-        int[] arrayNumsEven = new int[20];
-        int[] arrayNumsOdd = new int[20];
+        int i = 0, number, input = 1;
+        int[] arrayNums = new int[10];
+        bool isValid;
 
-        for (input = 0; input < 20; input++)
+        Console.WriteLine(Start);
+
+        for (input = 0; input < 10; input++)
         {
             Console.WriteLine(InputNumber, input + 1);
             try
             {
-                number = Int32.Parse(Console.ReadLine());
-                if (number % 2 == 0)
+                isValid = Int32.TryParse(Console.ReadLine(), out number);
+                if (isValid)
                 {
-                    arrayNumsEven[i] = number;
-                    i++;
+                    if (number >= MinNumber && number <= MaxNumber)
+                    {
+                        arrayNums[i] = number;
+                        i++;
+                    }
+                    else
+                    {
+                        Console.WriteLine(InputError);
+                        input--;
+                    }
                 }
                 else
                 {
-                    arrayNumsOdd[i] = number;
-                    i++;
+                    Console.WriteLine(InputError);
+                    input--;
                 }
             }
             catch (FormatException)
@@ -40,23 +53,17 @@ public class Program
                 input--;
             }
         }
-        i = 0;
-        Console.Write(EvenNumbers);
-        for (i = 0; i < arrayNumsEven.Length; i++)
+        Console.Write(NormalOrder);
+        foreach (int j in arrayNums)
         {
-            if (arrayNumsEven[i] != 0)
-            {
-                Console.Write($"{arrayNumsEven[i]} ");
-            }
+            Console.Write($"{j} ");
         }
-        i = 0;
-        Console.Write(OddNumbers);
-        for (i = 0; i < arrayNumsOdd.Length; i++)
+
+        Console.Write(InverseOrder);
+        
+        for (i = arrayNums.Length - 1; i >= 0; i--)
         {
-            if (arrayNumsOdd[i] != 0)
-            {
-                Console.Write($"{arrayNumsOdd[i]} ");
-            }
+            Console.Write($"{arrayNums[i]} ");
         }
     }
 }
