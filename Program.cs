@@ -14,7 +14,7 @@ public class Program
 
         for (input = 0; input < 20; input++)
         {
-            Console.WriteLine(InputNumber, input);
+            Console.WriteLine(InputNumber, input + 1);
             try
             {
                 number = Int32.Parse(Console.ReadLine());
@@ -26,29 +26,37 @@ public class Program
                 else
                 {
                     arrayNumsOdd[i] = number;
-                    j++;
+                    i++;
                 }
             }
             catch (FormatException)
             {
                 Console.WriteLine(InputError);
+                input--;
             }
             catch (Exception)
             {
                 Console.WriteLine(InputError);
+                input--;
             }
         }
         i = 0;
         Console.Write(EvenNumbers);
         for (i = 0; i < arrayNumsEven.Length; i++)
         {
-            Console.Write($"{arrayNumsEven[i]} ");
+            if (arrayNumsEven[i] != 0)
+            {
+                Console.Write($"{arrayNumsEven[i]} ");
+            }
         }
         i = 0;
         Console.Write(OddNumbers);
         for (i = 0; i < arrayNumsOdd.Length; i++)
         {
-            Console.Write($"{arrayNumsOdd[i]} ");
+            if (arrayNumsOdd[i] != 0)
+            {
+                Console.Write($"{arrayNumsOdd[i]} ");
+            }
         }
     }
 }
