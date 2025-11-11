@@ -1,67 +1,73 @@
 ﻿using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 public class Program
 {
     public static void Main()
     {
-        const string Start = "Enter 10 numbers between 1 and 9";
-        const string InputNumber = "Input value {0}:";
-        const string InputError = "Enter a number between 1 and 9.";
-        const string NormalOrder = "\nNormal order: ";
-        const string InverseOrder = "\nInverse order: ";
-        const int MinNumber = 1;
-        const int MaxNumber = 9;
+        const string NumberList = "There are 10 numbers between 1 and 9 generated at random";
+        const string InputError = "Enter a number between 1 and 9."; 
+        const string NumberSearch = "What number do you want to search?";
+        const string SearchFound = "The number {0} is in the list and it's repeated {1} times.";
+        const string SearchNotFound = "The number {0} is not in the list.";
+        const string AscendentOrder = "\nAscendent order: ";
 
-        int i = 0, number, input = 1;
+        int i = 0, search, input = 1, repeat = 0;
         int[] arrayNums = new int[10];
-        bool isValid;
+        bool isValid, found = false;
 
-        Console.WriteLine(Start);
+        Random rand = new Random();
+
+        Console.WriteLine(NumberList);
 
         for (input = 0; input < 10; input++)
         {
-            Console.WriteLine(InputNumber, input + 1);
-            try
-            {
-                isValid = Int32.TryParse(Console.ReadLine(), out number);
-                if (isValid)
-                {
-                    if (number >= MinNumber && number <= MaxNumber)
-                    {
-                        arrayNums[i] = number;
-                        i++;
-                    }
-                    else
-                    {
-                        Console.WriteLine(InputError);
-                        input--;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(InputError);
-                    input--;
-                }
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine(InputError);
-                input--;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine(InputError);
-                input--;
-            }
-        }
-        Console.Write(NormalOrder);
-        foreach (int j in arrayNums)
-        {
-            Console.Write($"{j} ");
+            int rnd = rand.Next(1,10);
+            arrayNums[i] = rnd;
+            i++;
         }
 
-        Console.Write(InverseOrder);
-        
-        for (i = arrayNums.Length - 1; i >= 0; i--)
+        Console.WriteLine(NumberSearch);
+        isValid = Int32.TryParse(Console.ReadLine(), out search);
+        if (isValid)
+        {
+            for (i = 0; i < arrayNums.Length; i++)
+            {
+                if (arrayNums[i] == search)
+                {
+                    found = true;
+                    repeat++;
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine(InputError);
+        }
+
+        if (found)
+        {
+            Console.WriteLine(SearchFound, search, repeat);
+        }
+        else 
+        { 
+            Console.WriteLine(SearchNotFound, search); 
+        }
+
+        for (i = 1; i < arrayNums.Length - 1; i++)
+        {
+            for (int j = 0; j < arrayNums.Length - 1; j++)
+            {
+                if (arrayNums[j] > arrayNums[j + 1])
+                {
+                    int aux = arrayNums[j + 1];
+                    arrayNums[j + 1] = arrayNums[j];
+                    arrayNums[j] = aux;
+                }
+            }
+        }
+
+        Console.Write(AscendentOrder);
+        for (i = 0; i < arrayNums.Length; i++)
         {
             Console.Write($"{arrayNums[i]} ");
         }
