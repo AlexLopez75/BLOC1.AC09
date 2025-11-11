@@ -3,35 +3,52 @@ public class Program
 {
     public static void Main()
     {
-        const string NumberList = "There are 10 numbers between 1 and 9 generated at random";
-        const string NormalOrder = "\nNormal order: ";
-        const string InverseOrder = "\nInverse order: ";
+        Console.OutputEncoding = System.Text.Encoding.Unicode;
 
-        int i = 0, input = 1;
-        int[] arrayNums = new int[10];
+        const string Shop = "===== ITEMS IN STOCK AT THE SHOP =====";
+        const string ItemStats = "Name - Level - Power - Weight (kg) - Price (€) - Is rare? - Rare type";
+        const int MinLevel = 1;
+        const int MaxLevel = 11;
+        const int MinPower = 100;
+        const int MaxPower = 501;
+        const int MinWeight = 1;
+        const int MaxWeight = 11;
+        const int MinPrice = 1;
+        const int MaxPrice = 201;
 
-        Random rand = new Random();
+        int[] arrayPower = new int[4];
+        int[] arrayLevel = new int[4];
+        double[] arrayWeight = new double[4];
+        double[] arrayPrice = new double[4];
+        string[] arrayName = { "Sword", "Shield", "Potion", "Bow" };
+        string[] arrayRarity = { "Common", "Uncommon", "Rare", "Legendary" };
+        bool[] arrayIsRare = new bool[4];
+        string rarity;
 
-        Console.WriteLine(NumberList);
+        Random rnd = new Random();
 
-        for (input = 0; input < 10; input++)
+        Console.WriteLine(Shop);
+        Console.WriteLine(ItemStats);
+
+        for (int i = 0; i < arrayName.Length; i++)
         {
-            int rnd = rand.Next(1, 10);
-            arrayNums[i] = rnd;
-            i++;
-        }
+            arrayLevel[i] = rnd.Next(MinLevel, MaxLevel + 1);
+            arrayPower[i] = rnd.Next(MinPower, MaxPower + 1);
+            arrayWeight[i] = rnd.NextDouble() * rnd.Next(MinWeight, MaxWeight);
+            arrayPrice[i] = rnd.NextDouble() * rnd.Next(MinPrice, MaxPrice);
+            
+            if (rnd.Next(0,2) == 0)
+            {
+                arrayIsRare[i] = false;
+                rarity = arrayRarity[0];
+            }
+            else
+            {
+                arrayIsRare[i] = true;
+                rarity = arrayRarity[rnd.Next(1,4)];
+            }
 
-        Console.Write(NormalOrder);
-        foreach (int j in arrayNums)
-        {
-            Console.Write($"{j} ");
-        }
-
-        Console.Write(InverseOrder);
-        
-        for (i = arrayNums.Length - 1; i >= 0; i--)
-        {
-            Console.Write($"{arrayNums[i]} ");
+            Console.WriteLine($"{arrayName[i]} - {arrayLevel[i]} - {arrayPower[i]} - {arrayWeight[i]:0.0} - {arrayPrice[i]:0.00}€ - {arrayIsRare[i]} - {rarity}");
         }
     }
 }
