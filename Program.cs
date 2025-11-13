@@ -5,81 +5,121 @@ public class Program
     {
         Console.OutputEncoding = System.Text.Encoding.Unicode;
 
-        const string Troops = "===== TROOPS TURNS =====";
-        const string Defense = "🛡️ ";
-        const string Attack = "⚔️ ";
-        const string Map = "===== MAP =====";
-        const string WatchTower = "🗼 ";
-        const string HidingCave = "🕳️ ";
-        const string NeutralTerrain = "🌿 ";
-        const string Regions = "===== REGIONS =====";
-        const string Extra = "💎 ";
-        const string Empty = "➖ ";
+        const string Welcome = "Welcome to Treasure Explorer! \nA 10x10 map with hidden treasures has been generated. You have 3 attempts to obtain the màximum amount of diamonds.";
+        const string MainMenu = "===== Main Menu =====";
+        const string Option1 = "1 - Dig in";
+        const string Option2 = "\n2 - Show map";
+        const string Option3 = "\n3 - Exit";
+        const string MenuError = "Input a value between 1 and 3";
+        const string DigIn = "You have chosen to dig.";
+        const string InputRow = "Input a row (0-9): ";
+        const string InputColumn = "Input a column (0-9): ";
+        const string InputError = "Input a number between 0 and 9";
+        const string MsgDigIn = "Digging in coordinates ({0},{1})...";
+        const string Treasure = "💎 ";
+        const string Nothing = "❌ ";
+        const string MsgEmpty = "There's nothing in here.";
+        const string MsgFound = "You struck a diamond!";
+        const string OutOfAttempts = "You are out of attemps.";
+        const string TotalTreasure = "You have obtained a total of {0} treasures!";
+        const int MinTreasure = 0;
+        const int MaxTreasure = 10;
 
-        string[] arrayTroops = new string[10];
-        string[,] matrixMap = new string[5,5];
-        string[][] jaggArrRegions = new string[3][];
-        jaggArrRegions[0] = new string[4];
-        jaggArrRegions[1] = new string[2];
-        jaggArrRegions[2] = new string[3];
+        string[,] matrixMap = new string[10,10];
+        int option, row, column, treasure, totalTreasure = 0, dig = 0;
+        bool isValid;
 
         Random rnd = new Random();
+        
+        treasure = rnd.Next(0, 11);
 
-        Console.WriteLine(Troops);
-        for (int i = 0; i < arrayTroops.Length; i++)
-        {
-            
-            if ((i % 2) == 0)
-            {
-                arrayTroops[i] = Defense;
-            }
-            else
-            {
-                arrayTroops[i] = Attack;
-            }
-            Console.Write($"{arrayTroops[i]} ");
-        }
-        Console.WriteLine();
-
-        Console.WriteLine(Map);
         for (int i = 0; i < matrixMap.GetLength(0); i++)
         {
             for (int j = 0; j < matrixMap.GetLength(1); j++)
             {
-                if ((i % 2) == 0 && (j % 2) == 0)
+                treasure = rnd.Next(MinTreasure, MaxTreasure);
+                if (treasure == 9)
                 {
-                    matrixMap[i,j] = WatchTower;
-                }
-                else if ((i % 2) != 0 && (j % 2) != 0) 
-                {
-                    matrixMap[i, j] = HidingCave;
+                    matrixMap[i, j] = Treasure;
                 }
                 else
                 {
-                    matrixMap[i, j] = NeutralTerrain;
+                    matrixMap[i, j] = Nothing;
                 }
-                Console.Write($"{matrixMap[i,j]} ");
-            }
-            Console.WriteLine();
+            } 
         }
-        Console.WriteLine();
 
-        Console.WriteLine(Regions);
-        for (int i = 0; i < jaggArrRegions.Length; i++)
+        Console.WriteLine(Welcome);
+        Console.WriteLine(MainMenu);
+        
+        do
         {
-            for (int j = 0; j < jaggArrRegions[i].Length; j++)
+            Console.WriteLine(Option1 + Option2 + Option3);
+            isValid = Int32.TryParse(Console.ReadLine(), out option);
+
+            if (option >= 1 && option <=3 && isValid)
             {
-                if ((i + j) % 2 == 0)
+                switch (option)
                 {
-                    jaggArrRegions[i][j] = Extra;
+                    case 1:
+                        Console.WriteLine(DigIn);
+                        Console.WriteLine(InputRow);
+                        isValid = Int32.TryParse(Console.ReadLine(), out row);
+
+                        if (row >= 0 && row <= 9 && isValid)
+                        {
+                            Console.WriteLine(InputColumn);
+                            isValid = Int32.TryParse(Console.ReadLine(), out column);
+
+                            if (column >= 0 && column <= 9 && isValid)
+                            {
+                                Console.WriteLine(MsgDigIn, row, column);
+                                if (matrixMap[row, column] == Treasure)
+                                {
+                                    Console.WriteLine(MsgFound);
+                                    totalTreasure++;
+                                    dig++;
+                                }
+                                else
+                                {
+                                    Console.WriteLine(MsgEmpty);
+                                    dig++;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine(InputError);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine(InputError);
+                        }
+                        break;
+                    case 2:
+                        for (int i = 0; i < matrixMap.GetLength(0); i++)
+                        {
+                            for (int j = 0; j < matrixMap.GetLength(1); j++)
+                            {
+                                treasure = rnd.Next(MinTreasure, MaxTreasure);
+                                Console.Write($"{matrixMap[i, j]} ");
+                            }
+                            Console.WriteLine();
+                        }
+                        break;
+                    case 3:
+                        break;
                 }
-                else
-                {
-                    jaggArrRegions[i][j] = Empty;
-                }
-                Console.Write($"{jaggArrRegions[i][j]} ");
             }
-            Console.WriteLine();
+            else
+            {
+                Console.WriteLine(MenuError);
+            }
+        } while (dig < 3 && option != 3);
+        if (dig == 3)
+        {
+            Console.WriteLine(OutOfAttempts);
+            Console.WriteLine(TotalTreasure, totalTreasure); 
         }
     }
 }
