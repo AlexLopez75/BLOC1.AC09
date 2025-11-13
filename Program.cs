@@ -5,44 +5,46 @@ public class Program
     public static void Main()
     {
         const string NumberList = "There are 10 numbers between 1 and 9 generated at random";
-        const string InputError = "Enter a number between 1 and 9."; 
+        const string InputError = "Enter a number between 1 and 9.";
         const string NumberSearch = "What number do you want to search?";
         const string SearchFound = "The number {0} is in the list and it's repeated {1} times.";
         const string SearchNotFound = "The number {0} is not in the list.";
         const string AscendentOrder = "\nAscendent order: ";
+        const int MinValue = 1;
+        const int MaxValue = 10;
 
-        int i = 0, search, input = 1, repeat = 0;
+        int search, repeat = 0;
         int[] arrayNums = new int[10];
         bool isValid, found = false;
 
         Random rand = new Random();
 
         Console.WriteLine(NumberList);
-
-        for (input = 0; input < 10; input++)
+        for (int i = 0; i < arrayNums.Length; i++)
         {
-            int rnd = rand.Next(1,10);
+            int rnd = rand.Next(MinValue, MaxValue);
             arrayNums[i] = rnd;
-            i++;
         }
-
-        Console.WriteLine(NumberSearch);
-        isValid = Int32.TryParse(Console.ReadLine(), out search);
-        if (isValid)
+        do 
         {
-            for (i = 0; i < arrayNums.Length; i++)
+            Console.WriteLine(NumberSearch);
+            isValid = Int32.TryParse(Console.ReadLine(), out search);
+            if (isValid)
             {
-                if (arrayNums[i] == search)
+                for (int i = 0; i < arrayNums.Length; i++)
                 {
-                    found = true;
-                    repeat++;
+                    if (arrayNums[i] == search)
+                    {
+                        found = true;
+                        repeat++;
+                    }
                 }
             }
-        }
-        else
-        {
-            Console.WriteLine(InputError);
-        }
+            else
+            {
+                Console.WriteLine(InputError);
+            }
+        } while (!isValid);
 
         if (found)
         {
@@ -53,7 +55,7 @@ public class Program
             Console.WriteLine(SearchNotFound, search); 
         }
 
-        for (i = 1; i < arrayNums.Length - 1; i++)
+        for (int i = 0; i < arrayNums.Length; i++)
         {
             for (int j = 0; j < arrayNums.Length - 1; j++)
             {
@@ -67,7 +69,7 @@ public class Program
         }
 
         Console.Write(AscendentOrder);
-        for (i = 0; i < arrayNums.Length; i++)
+        for (int i = 0; i < arrayNums.Length; i++)
         {
             Console.Write($"{arrayNums[i]} ");
         }
