@@ -74,16 +74,11 @@ public class Program
                             if (column >= 0 && column <= 9 && isValid)
                             {
                                 Console.WriteLine(MsgDigIn, row, column);
+                                Console.WriteLine(matrixMap[row, column] == Treasure ? MsgFound : MsgEmpty);
+                                dig++;
                                 if (matrixMap[row, column] == Treasure)
                                 {
-                                    Console.WriteLine(MsgFound);
                                     totalTreasure++;
-                                    dig++;
-                                }
-                                else
-                                {
-                                    Console.WriteLine(MsgEmpty);
-                                    dig++;
                                 }
                             }
                             else
