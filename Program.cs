@@ -23,12 +23,9 @@ public class Program
         jaggArrRegions[1] = new string[2];
         jaggArrRegions[2] = new string[3];
 
-        Random rnd = new Random();
-
         Console.WriteLine(Troops);
         for (int i = 0; i < arrayTroops.Length; i++)
         {
-            
             if ((i % 2) == 0)
             {
                 arrayTroops[i] = Defense;
