@@ -8,11 +8,11 @@ public class Program
         const string MenuPokedex = "1 - List Pokémon";
         const string InputError = "Enter 0 or 1";
         const string PokemonNumber = ". ";
-        const string PokemonRelease = "Which Pokémon do you want to release? Enter the index: ";
+        const string PokemonRelease = "\nWhich Pokémon do you want to release? Enter the index: ";
         const string PokedexImputError = "Enter a value between 1 and 15";
         const string PokemeonReleased = "The index {0} is empty. There's no Pokémon in that slot to release.";
 
-        int i = 0, j = 1, pokemon, input = 0;
+        int pokemon, input = 0;
         string empty = "Empty";
         string[] arrayPokedex = { "Pikachu", "Charmander", "Squirtle", "Bulbasaur", "Eevee", "Jigglypuff", "Meowth", "Psyduck", "Snorlax", "Gengar", "Machop", "Magikarp", "Vulpix", "Onix", "Abra"};
 
@@ -25,11 +25,12 @@ public class Program
             try 
             {
                 input = Int32.Parse(Console.ReadLine());
+                Console.WriteLine();
                 switch (input)
                 {
                     case 1:
-                        j = 1;
-                        for (i = 0; i < arrayPokedex.Length; i++)
+                        int j = 1;
+                        for (int i = 0; i < arrayPokedex.Length; i++)
                         {
                             Console.Write(j + PokemonNumber);
                             Console.WriteLine($"{arrayPokedex[i]}");
@@ -70,6 +71,7 @@ public class Program
             {
                 Console.WriteLine(InputError);
             }
+            Console.WriteLine();
         } while (input == 1);
     }
 }
