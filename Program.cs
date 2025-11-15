@@ -6,6 +6,8 @@ public class Program
         const string NumberList = "There are 10 numbers between 1 and 9 generated at random";
         const string NormalOrder = "\nNormal order: ";
         const string InverseOrder = "\nInverse order: ";
+        const int MinValue = 1;
+        const int MaxValue = 10;
 
         int[] arrayNums = new int[10];
 
@@ -15,7 +17,7 @@ public class Program
 
         for (int i = 0; i < 10; i++)
         {
-            int rnd = rand.Next(1, 10);
+            int rnd = rand.Next(MinValue, MaxValue);
             arrayNums[i] = rnd;
         }
 
