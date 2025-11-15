@@ -4,74 +4,58 @@ public class Program
 {
     public static void Main()
     {
-        const string NumberList = "There are 10 numbers between 1 and 9 generated at random";
-        const string InputError = "Enter a number between 1 and 9.";
-        const string NumberSearch = "What number do you want to search?";
-        const string SearchFound = "The number {0} is in the list and it's repeated {1} times.";
-        const string SearchNotFound = "The number {0} is not in the list.";
-        const string AscendentOrder = "\nAscendent order: ";
-        const int MinValue = 1;
-        const int MaxValue = 10;
+        const string PlayerList = "Player list: ";
+        const string GamesTitle = "\nGames played:";
+        const string GamesPlayed = "\n{0} played {1} games.";
+        const string GamesScores = "\nGame scores:";
+        const string AveragePoints = "--> Average: {0} points";
+        const string TotalPoints = "\nTotal global points of the tournament: {0} points";
+        const int MinPoints = 0;
+        const int MaxPoints = 101;
 
-        int search, repeat = 0;
-        int[] arrayNums = new int[10];
-        bool isValid, found = false;
+        string[] arrayPlayers = { "Alexloes75", "Xx_KillerGamer_xX", "CheepClapper69", "LolitoFDEZ" };
+        int[] arrayGames = { 3, 2, 5, 1 };
+        int[][] scores = new int[4][];
+        scores[0] = new int[3];
+        scores[1] = new int[2];
+        scores[2] = new int[5];
+        scores[3] = new int[1];
+        int totalPoints = 0;
 
         Random rand = new Random();
 
-        Console.WriteLine(NumberList);
-        for (int i = 0; i < arrayNums.Length; i++)
+        Console.Write(PlayerList);
+        for (int i = 0; i < arrayPlayers.Length; i++)
         {
-            int rnd = rand.Next(MinValue, MaxValue);
-            arrayNums[i] = rnd;
+            Console.Write($"{arrayPlayers[i]} ");
         }
-        do 
-        {
-            Console.WriteLine(NumberSearch);
-            isValid = Int32.TryParse(Console.ReadLine(), out search);
-            if (isValid)
-            {
-                for (int i = 0; i < arrayNums.Length; i++)
-                {
-                    if (arrayNums[i] == search)
-                    {
-                        found = true;
-                        repeat++;
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine(InputError);
-            }
-        } while (!isValid);
+        Console.WriteLine();
 
-        if (found)
+        Console.Write(GamesTitle);
+        for (int i = 0; i < arrayPlayers.Length; i++)
         {
-            Console.WriteLine(SearchFound, search, repeat);
+            Console.Write(GamesPlayed, arrayPlayers[i], arrayGames[i]);
         }
-        else 
-        { 
-            Console.WriteLine(SearchNotFound, search); 
+        Console.WriteLine();
+
+        Console.WriteLine(GamesScores);
+        for (int i = 0; i < scores.Length; i++)
+        {
+            int sum = 0;
+            int average = 0;
+            Console.Write($"{arrayPlayers[i]}: ");
+            for (int j = 0; j < scores[i].Length; j++)
+            {
+                int points = rand.Next(MinPoints, MaxPoints);
+                scores[i][j] = points;
+                sum = sum + points;
+                totalPoints = totalPoints + points;
+                Console.Write($"- {scores[i][j]} ");
+            }
+            average = sum / scores[i].Length;
+            Console.WriteLine(AveragePoints, average);
         }
 
-        for (int i = 0; i < arrayNums.Length; i++)
-        {
-            for (int j = 0; j < arrayNums.Length - 1; j++)
-            {
-                if (arrayNums[j] > arrayNums[j + 1])
-                {
-                    int aux = arrayNums[j + 1];
-                    arrayNums[j + 1] = arrayNums[j];
-                    arrayNums[j] = aux;
-                }
-            }
-        }
-
-        Console.Write(AscendentOrder);
-        for (int i = 0; i < arrayNums.Length; i++)
-        {
-            Console.Write($"{arrayNums[i]} ");
-        }
+        Console.WriteLine(TotalPoints, totalPoints);
     }
 }
