@@ -32,8 +32,8 @@ public class Program
 
         for (int i = 0; i < arrayName.Length; i++)
         {
-            arrayLevel[i] = rnd.Next(MinLevel, MaxLevel + 1);
-            arrayPower[i] = rnd.Next(MinPower, MaxPower + 1);
+            arrayLevel[i] = rnd.Next(MinLevel, MaxLevel);
+            arrayPower[i] = rnd.Next(MinPower, MaxPower);
             arrayWeight[i] = rnd.NextDouble() * rnd.Next(MinWeight, MaxWeight);
             arrayPrice[i] = rnd.NextDouble() * rnd.Next(MinPrice, MaxPrice);
             
